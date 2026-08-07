@@ -1,80 +1,26 @@
 @echo off
-title Big Truck Adventures Video Editor - INSTALL & LAUNCH
-color 0A
-
-echo.
-echo  =============================================================
-echo   BIG TRUCK ADVENTURES - Video Editor
-echo   100%% FREE  |  No watermarks  |  Runs locally on Windows
-echo  =============================================================
+echo ================================================
+echo   BIG TRUCK ADVENTURES - Video Editor Setup
+echo ================================================
 echo.
 
-:: Check Python
 python --version >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo  [ERROR] Python is not installed or not on PATH.
-    echo.
-    echo  Please download Python 3.10+ from: https://www.python.org/downloads/
-    echo  IMPORTANT: During install, check "Add Python to PATH"
-    echo.
+if errorlevel 1 (
+    echo [ERROR] Python not found. Install from https://python.org
     pause
     exit /b 1
 )
 
-echo  [OK] Python found.
-echo.
-echo  Installing / updating dependencies...
-echo.
-
-:: Upgrade pip silently
-python -m pip install --upgrade pip --quiet
-
-:: Core GUI
-echo  [1/6] Installing PyQt6...
-pip install PyQt6 --quiet --upgrade
-
-:: Video processing
-echo  [2/6] Installing MoviePy...
-pip install moviepy --quiet --upgrade
-
-:: FFmpeg via imageio (needed by MoviePy)
-echo  [3/6] Installing imageio with ffmpeg...
-pip install "imageio[ffmpeg]" --quiet --upgrade
-
-:: Image handling
-echo  [4/6] Installing Pillow...
-pip install Pillow --quiet --upgrade
-
-:: Text-to-speech
-echo  [5/6] Installing gTTS...
-pip install gTTS --quiet --upgrade
-
-:: HTTP requests
-echo  [6/6] Installing requests...
-pip install requests --quiet --upgrade
-
-echo.
-echo  =============================================================
-echo   All dependencies installed successfully!
-echo  =============================================================
-echo.
-echo  Creating project folders...
-mkdir "%~dp0projects" 2>nul
-mkdir "%~dp0exports"  2>nul
-mkdir "%~dp0.cache"   2>nul
-echo  [OK] Folders ready.
+echo [1/3] Installing required packages...
+pip install "moviepy>=1.0.3" "Pillow>=10.4.0" "gTTS>=2.5.3" "numpy>=1.26.4" "requests>=2.32.3" "PyQt6>=6.7.0" "imageio>=2.34.2" "imageio-ffmpeg>=0.5.1"
 echo.
 
-echo  Launching Big Truck Adventures Video Editor...
+echo [2/3] Creating output folders...
+if not exist "projects" mkdir projects
+if not exist "exports" mkdir exports
+if not exist ".cache" mkdir .cache
 echo.
-python "%~dp0video_editor.py"
 
-if %ERRORLEVEL% neq 0 (
-    echo.
-    echo  [ERROR] The editor crashed. See error above.
-    echo  Common fixes:
-    echo    - Re-run this file as Administrator
-    echo    - Make sure Python 3.10+ is installed
-    echo    - Run:  pip install PyQt6 moviepy Pillow gTTS
-    pause
-)
+echo [3/3] Launching Big Truck Adventures Video Editor...
+set PYTHONUTF8=1
+python video_editor.py

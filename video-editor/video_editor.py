@@ -11,6 +11,7 @@ Author : built for John Kirshy / Big Truck Adventures
 #  IMPORTS
 # ──────────────────────────────────────────────────────────────────────────────
 import sys, os, json, sqlite3, threading, time, math, random, shutil, tempfile
+sys.stdout.reconfigure(encoding='utf-8') if hasattr(sys.stdout, 'reconfigure') else None
 import urllib.request, urllib.parse, urllib.error
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
