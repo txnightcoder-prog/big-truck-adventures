@@ -991,7 +991,7 @@ class TimelineCanvas(QWidget):
             if not r.isValid() or r.right() < TRACK_HEADER_W or r.left() > w:
                 continue
             # body
-            grad = QLinearGradient(r.topLeft(), r.bottomLeft())
+            grad = QLinearGradient(QPointF(r.topLeft()), QPointF(r.bottomLeft()))
             grad.setColorAt(0, col.lighter(130))
             grad.setColorAt(1, col)
             p.setBrush(QBrush(grad))
